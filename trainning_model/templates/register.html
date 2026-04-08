@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="auth-wrap">
+    <div class="card auth-card">
+        <p class="eyebrow">Tao tai khoan moi</p>
+        <h1>Dang ky</h1>
+        <p class="subtle">Nhap thong tin co ban, sau do ban co the cap nhat ky nang chi tiet.</p>
+
+        {% if error %}
+        <div class="alert">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" action="/register" class="form-grid">
+            <label>
+                Ten dang nhap
+                <input type="text" name="username" required />
+            </label>
+            <label>
+                Mat khau
+                <input type="password" name="password" required />
+            </label>
+            <label>
+                Ho ten
+                <input type="text" name="full_name" />
+            </label>
+            <label>
+                Email
+                <input type="email" name="email" />
+            </label>
+            <label>
+                Ky nang
+                <textarea name="skills" rows="3" placeholder="python, sql, machine learning"></textarea>
+            </label>
+            <button class="primary-btn" type="submit">Tao tai khoan</button>
+        </form>
+
+        <p class="switch-link">
+            Da co tai khoan?
+            <a href="/login">Dang nhap ngay</a>
+        </p>
+    </div>
+</section>
+{% endblock %}

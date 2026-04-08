@@ -10,8 +10,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.neighbors import NearestNeighbors
 
 BASE_DIR = Path(__file__).resolve().parent
-PROJECT_ROOT = BASE_DIR.parent
-DATA_PATH = PROJECT_ROOT / "Job_dataset.csv"
 ARTIFACTS_DIR = BASE_DIR / "artifacts"
 TFIDF_PATH = ARTIFACTS_DIR / "tfidf.pkl"
 KNN_PATH = ARTIFACTS_DIR / "knn_model.pkl"
@@ -19,6 +17,22 @@ JOBS_INFO_PATH = ARTIFACTS_DIR / "jobs_info.pkl"
 META_PATH = ARTIFACTS_DIR / "training_meta.pkl"
 
 REQUIRED_COLUMNS = ["Job_ID", "Job_Name", "Job_Requirements"]
+
+
+def resolve_data_path() -> Path:
+    # Hỗ trợ cả tên file chuẩn và tên file đang có trong repo.
+    candidates = [
+        BASE_DIR / "Job_dataset.csv",
+        BASE_DIR / "Job Datsset.csv",
+    ]
+    for path in candidates:
+        if path.exists():
+            return path
+
+    raise FileNotFoundError(
+        "Khong tim thay file du lieu. Da thu: "
+        + ", ".join(str(path) for path in candidates)
+    )
 
 
 def clean_text(value: object) -> str:
@@ -112,7 +126,9 @@ def save_artifacts(
 def main() -> None:
     # Orchestrator cho luồng train offline end-to-end.
     print("[INFO] Bat dau training offline...")
-    df_jobs, stats = load_and_prepare_data(DATA_PATH)
+    data_path = resolve_data_path()
+    print(f"[INFO] Su dung du lieu: {data_path}")
+    df_jobs, stats = load_and_prepare_data(data_path)
     print(
         "[INFO] So dong truoc dedup: {rows_before}, sau dedup: {rows_after}, ty le giam: {dedup_ratio}".format(
             **stats

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="auth-wrap">
+    <div class="card auth-card">
+        <p class="eyebrow">Chao mung ban tro lai</p>
+        <h1>Dang nhap</h1>
+        <p class="subtle">Dang nhap de nhan goi y cong viec theo ky nang cua ban.</p>
+
+        {% if error %}
+        <div class="alert">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" action="/login" class="form-grid">
+            <label>
+                Ten dang nhap
+                <input type="text" name="username" required />
+            </label>
+            <label>
+                Mat khau
+                <input type="password" name="password" required />
+            </label>
+            <button class="primary-btn" type="submit">Dang nhap</button>
+        </form>
+
+        <p class="switch-link">
+            Chua co tai khoan?
+            <a href="/register">Dang ky tai day</a>
+        </p>
+    </div>
+</section>
+{% endblock %}

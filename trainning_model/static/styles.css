@@ -159,6 +159,7 @@ label {
 }
 
 input,
+select,
 textarea {
     width: 100%;
     border: 1px solid var(--line);
@@ -171,6 +172,10 @@ textarea {
 
 textarea {
     resize: vertical;
+}
+
+.compact-form {
+    margin-top: 8px;
 }
 
 .primary-btn,

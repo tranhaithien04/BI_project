@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="card">
+    <p class="eyebrow">Nhà tuyển dụng</p>
+    <h1>Tạo bài đăng mới</h1>
+    <p class="subtle">Đăng nhu cầu tuyển dụng để ứng viên xem thông tin và ứng tuyển.</p>
+
+    {% if message %}
+    <div class="success">{{ message }}</div>
+    {% endif %}
+
+    {% if error %}
+    <div class="alert">{{ error }}</div>
+    {% endif %}
+
+    <form method="post" action="/recruiter/jobs" class="form-grid">
+        <label>
+            Tiêu đề vị trí
+            <input type="text" name="title" required />
+        </label>
+        <label>
+            Địa điểm
+            <input type="text" name="location" placeholder="Hà Nội, TP.HCM, Remote..." />
+        </label>
+        <label>
+            Mô tả công việc
+            <textarea name="description" rows="4" placeholder="Tóm tắt phạm vi công việc..."></textarea>
+        </label>
+        <label>
+            Yêu cầu ứng viên
+            <textarea name="requirements" rows="4" placeholder="python, sql, fastapi..."></textarea>
+        </label>
+        <button class="primary-btn" type="submit">Đăng bài</button>
+    </form>
+</section>
+
+<section class="cards-grid">
+    {% for post in posts %}
+    <article class="card job-card">
+        <div class="job-head">
+            <h3>{{ post.title }}</h3>
+            <span class="chip">{{ "Đang mở" if post.status == "open" else post.status }}</span>
+        </div>
+        {% if post.location %}
+        <p class="subtle"><strong>Địa điểm:</strong> {{ post.location }}</p>
+        {% endif %}
+        {% if post.description %}
+        <p class="subtle"><strong>Mô tả:</strong> {{ post.description }}</p>
+        {% endif %}
+        <p class="subtle req"><strong>Yêu cầu:</strong> {{ post.requirements if post.requirements else "Đang cập nhật"
+            }}</p>
+        <p class="subtle">Số ứng viên đã ứng tuyển: <strong>{{ post.total_applied }}</strong></p>
+    </article>
+    {% endfor %}
+
+    {% if posts|length == 0 %}
+    <article class="card">
+        <h3>Bạn chưa có bài đăng nào</h3>
+        <p class="subtle">Hãy tạo bài đăng đầu tiên để bắt đầu nhận hồ sơ ứng viên.</p>
+    </article>
+    {% endif %}
+</section>
+{% endblock %}

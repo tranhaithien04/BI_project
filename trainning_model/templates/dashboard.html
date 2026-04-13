@@ -3,10 +3,10 @@
 {% block content %}
 <section class="dashboard-head card">
     <div>
-        <p class="eyebrow">Xin chao {{ user.full_name if user.full_name else user.username }}</p>
-        <h1>Goi y cong viec theo profile</h1>
+        <p class="eyebrow">Xin chào {{ user.full_name if user.full_name else user.username }}</p>
+        <h1>Gợi ý công việc theo hồ sơ</h1>
         <p class="subtle">
-            Skills hien tai: {{ user.skills if user.skills else "(chua cap nhat)" }}
+            Kỹ năng hiện tại: {{ user.skills if user.skills else "(chưa cập nhật)" }}
         </p>
     </div>
     <form method="get" action="/dashboard" class="topk-form">
@@ -14,7 +14,8 @@
             Top K
             <input type="number" name="top_k" min="1" max="20" value="{{ top_k }}" />
         </label>
-        <button class="primary-btn" type="submit">Lam moi</button>
+        <button class="primary-btn" type="submit">Làm mới</button>
+        <a class="ghost-btn" href="/jobs">Xem bài đăng nhà tuyển dụng</a>
     </form>
 </section>
 
@@ -29,10 +30,10 @@
             <h3>{{ item.job_name }}</h3>
             <span class="chip">ID {{ item.job_id }}</span>
         </div>
-        <p class="subtle req">Yeu cau: {{ item.job_requirements }}</p>
+        <p class="subtle req">Yêu cầu: {{ item.job_requirements }}</p>
         <div class="score-wrap">
             <div class="score-row">
-                <span>Match score</span>
+                <span>Điểm phù hợp</span>
                 <strong>{{ item.match_score }}</strong>
             </div>
             <div class="score-bar">
@@ -44,8 +45,8 @@
 
     {% if recommendations|length == 0 and not notice %}
     <article class="card">
-        <h3>Khong co ket qua</h3>
-        <p class="subtle">Thu mo rong ky nang trong profile de tim them cong viec phu hop.</p>
+        <h3>Không có kết quả</h3>
+        <p class="subtle">Thử mở rộng kỹ năng trong hồ sơ để tìm thêm công việc phù hợp.</p>
     </article>
     {% endif %}
 </section>

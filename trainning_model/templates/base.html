@@ -19,13 +19,20 @@
     <div class="bg-grid"></div>
 
     <header class="topbar">
-        <a class="brand" href="/dashboard">JobMatch AI</a>
+        <a class="brand" href="/">JobMatch AI</a>
         {% if user %}
         <nav class="menu">
-            <a href="/dashboard">Dashboard</a>
-            <a href="/profile">Profile</a>
+            {% if user.role == "recruiter" %}
+            <a href="/recruiter/jobs">Bài đăng</a>
+            <a href="/recruiter/applications">Ứng viên</a>
+            <a href="/profile">Hồ sơ</a>
+            {% else %}
+            <a href="/dashboard">Bảng điều khiển</a>
+            <a href="/jobs">Việc làm</a>
+            <a href="/profile">Hồ sơ</a>
+            {% endif %}
             <form action="/logout" method="post">
-                <button class="ghost-btn" type="submit">Dang xuat</button>
+                <button class="ghost-btn" type="submit">Đăng xuất</button>
             </form>
         </nav>
         {% endif %}

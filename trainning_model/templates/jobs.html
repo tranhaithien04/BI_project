@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="card dashboard-head">
+    <div>
+        <p class="eyebrow">Việc làm từ nhà tuyển dụng</p>
+        <h1>Danh sách bài đăng mới</h1>
+        <p class="subtle">Bạn có thể xem thông tin và ứng tuyển ngay trong từng bài đăng.</p>
+    </div>
+</section>
+
+{% if message %}
+{% if "thành công" in (message|lower) %}
+<div class="card success">{{ message }}</div>
+{% else %}
+<div class="card alert-banner">{{ message }}</div>
+{% endif %}
+{% endif %}
+
+{% if score_notice %}
+<div class="card alert-banner">{{ score_notice }}</div>
+{% endif %}
+
+<section class="cards-grid">
+    {% for item in jobs %}
+    <article class="card job-card">
+        <div class="job-head">
+            <h3>{{ item.title }}</h3>
+            <span class="chip">{{ item.location if item.location else "Không rõ địa điểm" }}</span>
+        </div>
+        <p class="subtle"><strong>Nhà tuyển dụng:</strong> {{ item.recruiter_display_name }}</p>
+        {% if item.description %}
+        <p class="subtle"><strong>Mô tả:</strong> {{ item.description }}</p>
+        {% endif %}
+        <p class="subtle req"><strong>Yêu cầu:</strong> {{ item.requirements if item.requirements else "Đang cập nhật"
+            }}</p>
+
+        {% if item.match_score is not none %}
+        <p class="subtle"><strong>Điểm phù hợp:</strong> {{ "%.1f"|format(item.match_score * 100) }}%</p>
+        {% else %}
+        <p class="subtle"><strong>Điểm phù hợp:</strong> Chưa tính được</p>
+        {% endif %}
+
+        <p class="subtle">Số ứng viên đã ứng tuyển: {{ item.total_applied }}</p>
+
+        {% if item.has_applied %}
+        <div class="success">Bạn đã ứng tuyển bài đăng này.</div>
+        {% else %}
+        <form method="post" action="/jobs/{{ item.id }}/apply" class="form-grid compact-form">
+            <label>
+                Lời nhắn (tùy chọn)
+                <textarea name="cover_letter" rows="3"
+                    placeholder="Em quan tâm vị trí này và sẵn sàng trao đổi thêm..."></textarea>
+            </label>
+            <button class="primary-btn" type="submit">Ứng tuyển ngay</button>
+        </form>
+        {% endif %}
+    </article>
+    {% endfor %}
+
+    {% if jobs|length == 0 %}
+    <article class="card">
+        <h3>Chưa có bài đăng nào</h3>
+        <p class="subtle">Hiện tại chưa có nhà tuyển dụng đăng bài. Bạn quay lại sau nhé.</p>
+    </article>
+    {% endif %}
+</section>
+{% endblock %}

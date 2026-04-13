@@ -3,9 +3,9 @@
 {% block content %}
 <section class="auth-wrap">
     <div class="card auth-card">
-        <p class="eyebrow">Tao tai khoan moi</p>
-        <h1>Dang ky</h1>
-        <p class="subtle">Nhap thong tin co ban, sau do ban co the cap nhat ky nang chi tiet.</p>
+        <p class="eyebrow">Tạo tài khoản mới</p>
+        <h1>Đăng ký</h1>
+        <p class="subtle">Nhập thông tin cơ bản, sau đó bạn có thể cập nhật kỹ năng chi tiết.</p>
 
         {% if error %}
         <div class="alert">{{ error }}</div>
@@ -13,15 +13,22 @@
 
         <form method="post" action="/register" class="form-grid">
             <label>
-                Ten dang nhap
+                Tên đăng nhập
                 <input type="text" name="username" required />
             </label>
             <label>
-                Mat khau
+                Mật khẩu
                 <input type="password" name="password" required />
             </label>
             <label>
-                Ho ten
+                Vai trò
+                <select name="role">
+                    <option value="candidate">Ứng viên tìm việc</option>
+                    <option value="recruiter">Nhà tuyển dụng</option>
+                </select>
+            </label>
+            <label>
+                Họ tên
                 <input type="text" name="full_name" />
             </label>
             <label>
@@ -29,15 +36,15 @@
                 <input type="email" name="email" />
             </label>
             <label>
-                Ky nang
+                Kỹ năng
                 <textarea name="skills" rows="3" placeholder="python, sql, machine learning"></textarea>
             </label>
-            <button class="primary-btn" type="submit">Tao tai khoan</button>
+            <button class="primary-btn" type="submit">Tạo tài khoản</button>
         </form>
 
         <p class="switch-link">
-            Da co tai khoan?
-            <a href="/login">Dang nhap ngay</a>
+            Đã có tài khoản?
+            <a href="/login">Đăng nhập ngay</a>
         </p>
     </div>
 </section>

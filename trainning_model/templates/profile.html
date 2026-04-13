@@ -1,41 +1,35 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="two-col">
-    <div class="card">
-        <p class="eyebrow">Thong tin ca nhan</p>
-        <h1>Cap nhat profile</h1>
-        <p class="subtle">Skills duoc dung de he thong tinh do phu hop voi tung job.</p>
+<section class="card">
+    <p class="eyebrow">Thông tin cá nhân</p>
+    <h1>Cập nhật hồ sơ</h1>
+    {% if is_recruiter %}
+    <p class="subtle">Tài khoản nhà tuyển dụng chỉ cần cập nhật thông tin liên hệ.</p>
+    {% else %}
+    <p class="subtle">Kỹ năng được dùng để hệ thống tính độ phù hợp với từng công việc.</p>
+    {% endif %}
 
-        {% if saved %}
-        <div class="success">Da cap nhat ho so thanh cong.</div>
+    {% if saved %}
+    <div class="success">Đã cập nhật hồ sơ thành công.</div>
+    {% endif %}
+
+    <form method="post" action="/profile" class="form-grid">
+        <label>
+            Họ tên
+            <input type="text" name="full_name" value="{{ user.full_name }}" />
+        </label>
+        <label>
+            Email
+            <input type="email" name="email" value="{{ user.email }}" />
+        </label>
+        {% if not is_recruiter %}
+        <label>
+            Kỹ năng
+            <textarea name="skills" rows="5" placeholder="python, sql, machine learning">{{ user.skills }}</textarea>
+        </label>
         {% endif %}
-
-        <form method="post" action="/profile" class="form-grid">
-            <label>
-                Ho ten
-                <input type="text" name="full_name" value="{{ user.full_name }}" />
-            </label>
-            <label>
-                Email
-                <input type="email" name="email" value="{{ user.email }}" />
-            </label>
-            <label>
-                Ky nang
-                <textarea name="skills" rows="5" placeholder="python, sql, ai">{{ user.skills }}</textarea>
-            </label>
-            <button class="primary-btn" type="submit">Luu thay doi</button>
-        </form>
-    </div>
-
-    <aside class="card side-note">
-        <h3>Meo de goi y tot hon</h3>
-        <ul>
-            <li>Nhap ky nang bang tieng Anh de match dataset tot hon.</li>
-            <li>Dung dau phay de tach ky nang.</li>
-            <li>Them ca skill nen tang va framework ban da dung.</li>
-        </ul>
-        <a class="link-btn" href="/dashboard">Xem goi y ngay</a>
-    </aside>
+        <button class="primary-btn" type="submit">Lưu thay đổi</button>
+    </form>
 </section>
 {% endblock %}

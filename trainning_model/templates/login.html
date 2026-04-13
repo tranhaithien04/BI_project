@@ -3,9 +3,9 @@
 {% block content %}
 <section class="auth-wrap">
     <div class="card auth-card">
-        <p class="eyebrow">Chao mung ban tro lai</p>
-        <h1>Dang nhap</h1>
-        <p class="subtle">Dang nhap de nhan goi y cong viec theo ky nang cua ban.</p>
+        <p class="eyebrow">Chào mừng bạn trở lại</p>
+        <h1>Đăng nhập</h1>
+        <p class="subtle">Đăng nhập để nhận gợi ý công việc theo kỹ năng của bạn.</p>
 
         {% if error %}
         <div class="alert">{{ error }}</div>
@@ -13,19 +13,19 @@
 
         <form method="post" action="/login" class="form-grid">
             <label>
-                Ten dang nhap
+                Tên đăng nhập
                 <input type="text" name="username" required />
             </label>
             <label>
-                Mat khau
+                Mật khẩu
                 <input type="password" name="password" required />
             </label>
-            <button class="primary-btn" type="submit">Dang nhap</button>
+            <button class="primary-btn" type="submit">Đăng nhập</button>
         </form>
 
         <p class="switch-link">
-            Chua co tai khoan?
-            <a href="/register">Dang ky tai day</a>
+            Chưa có tài khoản?
+            <a href="/register">Đăng ký tại đây</a>
         </p>
     </div>
 </section>

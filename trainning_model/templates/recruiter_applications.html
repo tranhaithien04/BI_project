@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="card dashboard-head">
+    <div>
+        <p class="eyebrow">Quản lý hồ sơ</p>
+        <h1>Ứng viên đã ứng tuyển</h1>
+        <p class="subtle">Danh sách được sắp xếp theo thời gian ứng tuyển mới nhất.</p>
+    </div>
+    <a class="ghost-btn" href="/recruiter/jobs">Quay về quản lý bài đăng</a>
+</section>
+
+<section class="cards-grid">
+    {% for item in applications %}
+    <article class="card job-card">
+        <div class="job-head">
+            <h3>{{ item.candidate_full_name if item.candidate_full_name else item.candidate_username }}</h3>
+            <span class="chip">{{ "Đã ứng tuyển" if item.status == "applied" else item.status }}</span>
+        </div>
+        <p class="subtle"><strong>Tên đăng nhập:</strong> {{ item.candidate_username }}</p>
+        <p class="subtle"><strong>Vị trí ứng tuyển:</strong> {{ item.job_title }}</p>
+        <p class="subtle"><strong>Email:</strong> {{ item.candidate_email if item.candidate_email else "Chưa cập nhật"
+            }}</p>
+        <p class="subtle"><strong>Kỹ năng:</strong> {{ item.candidate_skills if item.candidate_skills else "Chưa cập
+            nhật" }}</p>
+        {% if item.cover_letter %}
+        <p class="subtle"><strong>Lời nhắn:</strong> {{ item.cover_letter }}</p>
+        {% endif %}
+        <p class="subtle">Thời gian ứng tuyển: {{ item.created_at }}</p>
+    </article>
+    {% endfor %}
+
+    {% if applications|length == 0 %}
+    <article class="card">
+        <h3>Chưa có ứng viên nào ứng tuyển</h3>
+        <p class="subtle">Sau khi ứng viên nộp hồ sơ, danh sách sẽ hiển thị ở đây.</p>
+    </article>
+    {% endif %}
+</section>
+{% endblock %}
